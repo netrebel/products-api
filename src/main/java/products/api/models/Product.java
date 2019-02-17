@@ -1,5 +1,6 @@
 package products.api.models;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -8,7 +9,12 @@ import java.util.Objects;
 /**
  * @author miguel.reyes on 2019-02-17.
  */
+@Entity
 public class Product {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     @Size(max = 50, message = "name cannot be empty and max 50 characters long.")
     @NotBlank
@@ -17,6 +23,7 @@ public class Product {
     public String parentId;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     public Label label;
 
     @Override
@@ -41,4 +48,5 @@ public class Product {
     public int hashCode() {
         return Objects.hash(name, label);
     }
+
 }

@@ -2,7 +2,10 @@ package products.api.controllers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import products.api.http.NotFound;
+import products.api.jpa.ProductsRepository;
 import products.api.models.Product;
 
 import javax.validation.Valid;
@@ -16,19 +19,27 @@ public class MainController {
 
     Logger LOG = LoggerFactory.getLogger(MainController.class);
 
+    @Autowired
+    private ProductsRepository repository;
+
     @GetMapping("/products/{id}")
-    public String findAll(@PathVariable(value = "id") String id) {
-        return "Getting " + id; //TODO Implement
+    public Product findById(@PathVariable(value = "id") Long id) {
+        LOG.debug("Find product with Id: " + id);
+        return repository.findById(id).orElseThrow(NotFound::new);
     }
 
     @PostMapping("/products")
-    public String save(@RequestBody @Valid Set<Product> request) {
-        LOG.debug(request.toString());
-        return "ok"; //TODO Implement and return response object instead
+    public Set<Product> save(@RequestBody @Valid Set<Product> products) {
+        LOG.debug("Saving: " + products.toString());
+        for (Product p : products) {
+            repository.save(p);
+        }
+        return products;
     }
 
     @DeleteMapping("/products/{id}")
-    public void delete(@PathVariable(value = "id") String id) {
-        System.out.println("Deleting " + id); //TODO Implement
+    public void delete(@PathVariable(value = "id") Long id) {
+        LOG.debug("Deleting: " + id);
+        repository.delete(repository.findById(id).orElseThrow(NotFound::new));
     }
 }
