@@ -1,9 +1,10 @@
 package products.api.controllers;
 
 import org.springframework.web.bind.annotation.*;
-import products.api.http.ProductsRequest;
+import products.api.models.Product;
 
 import javax.validation.Valid;
+import java.util.Set;
 
 /**
  * @author miguel.reyes on 2019-02-17.
@@ -17,8 +18,9 @@ public class MainController {
     }
 
     @PostMapping("/products")
-    public ProductsRequest save(@RequestBody @Valid ProductsRequest request) {
-        return request; //TODO Implement and return response object instead
+    public String save(@RequestBody @Valid Set<Product> request) {
+        System.out.println(request);
+        return "ok"; //TODO Implement and return response object instead
     }
 
     @DeleteMapping("/products/{id}")
