@@ -1,5 +1,7 @@
 package products.api.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 import products.api.models.Product;
 
@@ -12,6 +14,8 @@ import java.util.Set;
 @RestController
 public class MainController {
 
+    Logger LOG = LoggerFactory.getLogger(MainController.class);
+
     @GetMapping("/products/{id}")
     public String findAll(@PathVariable(value = "id") String id) {
         return "Getting " + id; //TODO Implement
@@ -19,7 +23,7 @@ public class MainController {
 
     @PostMapping("/products")
     public String save(@RequestBody @Valid Set<Product> request) {
-        System.out.println(request);
+        LOG.debug(request.toString());
         return "ok"; //TODO Implement and return response object instead
     }
 
