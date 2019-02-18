@@ -14,7 +14,7 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    public Long id;
 
     @Size(max = 50, message = "name cannot be empty and max 50 characters long.")
     @NotBlank
