@@ -59,3 +59,29 @@ curl -X DELETE \
 # Logs
 
 RollingFileAppender configured to write to `./logs/products-api.log`
+
+# TODOs
+
+Project requirements:
+- [x] You may use any Java framework/platform you prefer (Spring Boot, Jersey, Vert.x, etc).
+- [x] Create a Maven or Gradle project to handle build and dependencies
+- [x] Use either a lightweight DB (H2) or MySQL to persist data
+- [x] Write some basic unit tests to validate functionality
+
+Application requirements:
+- [x] Provide basic input validation and return meaningful errors
+- [x] Write to a log file as appropriate
+
+Create service:
+- [x] Create N records for any given level of the hierarchy, for a given parent node.
+- [x] Root level nodes are created by providing no parent node in the request.
+- [x] Allow duplicate records in the same request but only store one copy (remove duplicates)
+- [x] Return an error if the node name already exists from a prior service call that created it.
+- [ ] Create with parent node 
+
+Delete service:
+- [x] Delete by Id
+- [ ] Delete with children nodes (cascade delete)
+
+List service:
+- [ ] List records within a level of the hierarchy, for a given parent node.
