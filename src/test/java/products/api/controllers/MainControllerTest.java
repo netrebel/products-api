@@ -16,6 +16,7 @@ import products.api.models.Product;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
@@ -23,7 +24,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -50,7 +51,24 @@ public class MainControllerTest {
     }
 
     @Test
-    public void findById() {
+    public void findByIdReturnsOk() throws Exception {
+        Product product = new Product();
+        product.name = "Hello World";
+        product.label = Label.PRODUCTS;
+        given(repository.findById(1L)).willReturn(Optional.of(product));
+
+        mvc.perform(get("/products/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void findByIdReturnsNotFound() throws Exception {
+        given(repository.findById(1L)).willReturn(Optional.empty());
+
+        mvc.perform(get("/products/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -111,7 +129,24 @@ public class MainControllerTest {
     }
 
     @Test
-    public void delete() {
+    public void deleteShouldReturnOk() throws Exception {
+        Product product = new Product();
+        product.name = "Hello World";
+        product.label = Label.PRODUCTS;
+        given(repository.findById(1L)).willReturn(Optional.of(product));
+
+        mvc.perform(delete("/products/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void deleteShouldReturnNotFound() throws Exception {
+        given(repository.findById(1L)).willReturn(Optional.empty());
+
+        mvc.perform(delete("/products/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 
 }
