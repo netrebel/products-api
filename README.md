@@ -60,6 +60,10 @@ curl -X DELETE \
 
 RollingFileAppender configured to write to `./logs/products-api.log`
 
+# Database (H2)
+
+Admin UI available at: http://localhost:8080/h2
+
 # TODOs
 
 Project requirements:
